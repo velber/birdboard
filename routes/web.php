@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// projects
+Route::resource('projects', 'ProjectsController', [
+    'only' => ['index', 'store', 'show'],
+]);
