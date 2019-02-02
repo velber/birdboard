@@ -8,7 +8,6 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
-
     <h1>Projects</h1>
     <ul>
         @forelse($projects as $project)
