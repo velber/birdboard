@@ -10,6 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class ProjectTest extends TestCase
 {
     use WithFaker;
+    use RefreshDatabase;
 
     /**
      * @test
