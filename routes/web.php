@@ -19,3 +19,7 @@ Route::get('/', function () {
 Route::resource('projects', 'ProjectsController', [
     'only' => ['index', 'store', 'show'],
 ]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['store']);
+    }
 
     /**
      * Show index projects page.
@@ -39,7 +43,7 @@ class ProjectsController extends Controller
             'description' => 'required',
         ]);
 
-        Project::create($attributes);
+        $request->user()->projects()->create($attributes);
 
         return redirect()->route('projects.index');
     }
