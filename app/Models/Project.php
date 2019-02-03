@@ -12,4 +12,9 @@ class Project extends Model
     {
         return route('projects.show', ['project' => $this->id]);
     }
+
+    public function owner()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
+    }
 }

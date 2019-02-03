@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth')->only(['store']);
-    }
-
     /**
      * Show index projects page.
      *
@@ -19,13 +14,23 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::all();
+        $projects = auth()->user()->projects;
 
         return view('projects.index', compact('projects'));
     }
 
+    /**
+     * Show single project page.
+     *
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show(Project $project)
     {
+        if (auth()->user()->isNot($project->owner)) {
+            abort(403);
+        }
+
         return view('projects.show', compact('project'));
     }
 
