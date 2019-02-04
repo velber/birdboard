@@ -1,25 +1,22 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-    <title>Projects</title>
-</head>
-<body>
-<div class="flex-center position-ref full-height">
-    <h1>Projects</h1>
-    <ul>
-        @forelse($projects as $project)
-            <li>
-                <a href="{{ $project->path() }}">
-                    {{ $project->title }}
-                </a>
-            </li>
-        @empty
-            <p>No Projects yet.</p>
-        @endforelse
-    </ul>
-</div>
-</body>
-</html>
+@section('content')
+    <div class="container">
+        <div class="flex items-center">
+            <h1 class="mb-3 mr-auto">Projects</h1>
+            <a href="{{ route('projects.create') }}">Create a new project</a>
+        </div>
+        <ul>
+            @forelse($projects as $project)
+                <li>
+                    <a href="{{ $project->path() }}">
+                        {{ $project->title }}
+                    </a>
+                </li>
+            @empty
+                <p>No Projects yet.</p>
+            @endforelse
+        </ul>
+    </div>
+@endsection
+
