@@ -33,4 +33,15 @@ class ProjectTest extends TestCase
 
         $this->assertInstanceOf(User::class, $project->owner);
     }
+
+    /** @test */
+    public function it_can_add_a_task()
+    {
+        $project = factory(Project::class)->create();
+
+        $task = $project->addTask(str_random(6));
+
+        $this->assertCount(1, $project->tasks);
+        $this->assertTrue($project->tasks->contains($task));
+    }
 }

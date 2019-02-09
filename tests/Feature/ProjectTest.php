@@ -33,7 +33,7 @@ class ManageProjectTest extends TestCase
     {
         $this->withExceptionHandling();
         $owner = factory(User::class)->create();
-        $this->actingAs($owner);
+        $this->signIn($owner);
         $this->get('/projects/create')->assertStatus(200);
 
         $project = factory(Project::class)->raw(['owner_id'=> $owner->id]);

@@ -17,4 +17,14 @@ class Project extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function addTask(string $body)
+    {
+        return $this->tasks()->create(['body' => $body]);
+    }
 }
