@@ -56,8 +56,8 @@ class ProjectsController extends Controller
             'description' => 'required',
         ]);
 
-        $request->user()->projects()->create($attributes);
+        $project = $request->user()->projects()->create($attributes);
 
-        return redirect()->route('projects.index');
+        return redirect()->route('projects.show', ['project' => $project->id]);
     }
 }

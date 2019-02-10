@@ -12,6 +12,27 @@ class ProjectTasksTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
+    /** @test */
+    public function guest_cannot_add_tasks_to_projects()
+    {
+        $project = factory(Project::class)->create();
+
+        $this->post($project->path() . '/tasks')->assertRedirect('login');
+    }
+
+    /** @test */
+    public function only_the_owner_of_a_project_may_add_tasks()
+    {
+        $this->signIn();
+
+        $project = factory(Project::class)->create();
+        $task = str_random(10);
+        $this->post($project->path() . '/tasks', ['body' => $task])
+            ->assertStatus(403);
+
+        $this->assertDatabaseMissing('tasks', ['body' => $task]);
+    }
+
     /**
      * A basic test example.
      * @test
