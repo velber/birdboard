@@ -38,8 +38,10 @@ class ManageProjectTest extends TestCase
 
         $project = factory(Project::class)->raw(['owner_id'=> $owner->id]);
 
-        $this->post('/projects', $project)
-            ->assertRedirect('projects');
+        $response = $this->post('/projects', $project);
+
+        $projectModel = Project::where($project)->first();
+        $response->assertRedirect($projectModel->path());
         $this->assertDatabaseHas('projects', $project);
 
         $this->get('/projects')->assertSee($project['title']);
@@ -73,13 +75,13 @@ class ManageProjectTest extends TestCase
     public function a_user_can_view_his_project()
     {
         $this->withExceptionHandling();
-        $this->be(factory(User::class)->create());
+
+        $this->signIn();
 
         $project = factory(Project::class)->create(['owner_id' => auth()->id()]);
 
         $this->get($project->path())
-            ->assertSee($project->title)
-            ->assertSee($project->description);
+            ->assertSee($project->title);
     }
 
     /**
