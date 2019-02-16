@@ -6,7 +6,7 @@
             <p class="text-grey text-sm font-normal">
                 <a href="{{ route('projects.index') }}" class="text-grey text-sm font-normal no-underline">My Projects</a> / {{ $project->title }}
             </p>
-            <a href="{{ route('projects.create') }}" class="button">Create a new project</a>
+            <a href="{{ route('projects.edit', ['project' => $project->id ]) }}" class="button">Edit project</a>
         </div>
     </header>
     <main>

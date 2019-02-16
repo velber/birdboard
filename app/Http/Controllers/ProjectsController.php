@@ -61,11 +61,27 @@ class ProjectsController extends Controller
         return redirect()->route('projects.show', ['project' => $project->id]);
     }
 
-    public function update(Project $project)
+
+    /**
+     * @param Project $project
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function edit(Project $project)
+    {
+        return view('projects.edit', compact('project'));
+    }
+
+    public function update(Request $request, Project $project)
     {
         $this->authorize('update', $project);
 
-        $project->update(['notes' => request('notes')]);
+        $attributes = $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'notes' => 'nullable',
+        ]);
+
+        $project->update($attributes);
 
         return redirect($project->path());
     }

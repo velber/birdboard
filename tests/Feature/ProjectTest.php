@@ -22,6 +22,7 @@ class ManageProjectTest extends TestCase
         $project = factory(Project::class)->create();
         $this->get('/projects')->assertRedirect('login');
         $this->get('/projects/create')->assertRedirect('login');
+        $this->get('/projects/edit')->assertRedirect('login');
         $this->get($project->path())->assertRedirect('login');
         $this->post('/projects', $project->toArray())->assertRedirect('login');
     }
@@ -56,9 +57,14 @@ class ManageProjectTest extends TestCase
         $project = ProjectFactory::create();
 
         $this->actingAs($project->owner)
-            ->patch($project->path(), $attributes = ['notes' => str_random(10),])
+            ->patch($project->path(), $attributes = [
+                'notes' => str_random(10),
+                'title' => 'Changed',
+                'description' => 'Changed',
+                ])
             ->assertRedirect($project->path());
 
+        $this->get($project->path() . '/edit')->assertOk();
         $this->assertDatabaseHas('projects', $attributes);
     }
 

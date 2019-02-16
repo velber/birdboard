@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
 
     // projects
     Route::resource('projects', 'ProjectsController', [
-            'only' => ['index', 'store', 'show', 'create', 'update'],
+            'only' => ['index', 'store', 'show', 'create', 'update', 'edit'],
         ]);
 
     // project tasks
