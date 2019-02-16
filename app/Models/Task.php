@@ -17,6 +17,6 @@ class Task extends Model
 
     public function path()
     {
-        return sprintf("/projects/%d/tasks/%d", $this->project->id, $this->id);
+        return sprintf("/tasks/%d", $this->id);
     }
 }

@@ -19,12 +19,12 @@ Route::middleware('auth')->group(function () {
 
     // projects
     Route::resource('projects', 'ProjectsController', [
-            'only' => ['index', 'store', 'show', 'create'],
+            'only' => ['index', 'store', 'show', 'create', 'update'],
         ]);
 
     // project tasks
     Route::post('projects/{project}/tasks', 'ProjectTasksController@store');
-    Route::patch('projects/{project}/tasks/{task}', 'ProjectTasksController@update');
+    Route::patch('tasks/{task}', 'ProjectTasksController@update');
 });
 
 

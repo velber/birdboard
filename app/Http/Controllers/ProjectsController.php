@@ -24,12 +24,11 @@ class ProjectsController extends Controller
      *
      * @param Project $project
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Project $project)
     {
-        if (auth()->user()->isNot($project->owner)) {
-            abort(403);
-        }
+        $this->authorize('update', $project);
 
         return view('projects.show', compact('project'));
     }
@@ -54,10 +53,20 @@ class ProjectsController extends Controller
         $attributes = $this->validate($request, [
             'title' => 'required',
             'description' => 'required',
+            'notes' => 'nullable',
         ]);
 
         $project = $request->user()->projects()->create($attributes);
 
         return redirect()->route('projects.show', ['project' => $project->id]);
+    }
+
+    public function update(Project $project)
+    {
+        $this->authorize('update', $project);
+
+        $project->update(['notes' => request('notes')]);
+
+        return redirect($project->path());
     }
 }
