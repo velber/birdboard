@@ -70,6 +70,23 @@ class ManageProjectTest extends TestCase
 
     /**
      * @test
+     * @return void
+     */
+    public function a_user_can_update_a_project_general_otes()
+    {
+        $project = ProjectFactory::create();
+
+        $this->actingAs($project->owner)
+            ->patch($project->path(), $attributes = [
+                'notes' => str_random(10),
+                ])
+            ->assertRedirect($project->path());
+
+        $this->assertDatabaseHas('projects', $attributes);
+    }
+
+    /**
+     * @test
      */
     public function a_title_is_required()
     {
