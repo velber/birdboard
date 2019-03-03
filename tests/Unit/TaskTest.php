@@ -31,4 +31,14 @@ class TaskTest extends TestCase
 
         $this->assertEquals('/tasks/' . $task->id, $task->path());
     }
+
+    /** @test */
+    public function it_can_be_completed()
+    {
+        $task = factory(Task::class)->create();
+        $this->assertFalse($task->completed);
+
+        $task->complete();
+        $this->assertTrue($task->fresh()->completed);
+    }
 }

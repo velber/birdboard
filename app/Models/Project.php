@@ -32,4 +32,15 @@ class Project extends Model
     {
         return $this->tasks()->create(['body' => $body]);
     }
+
+    /**
+     * @param string $type
+     */
+    public function createActivity(string $type): void
+    {
+        Activity::create([
+            'project_id' => $this->id,
+            'description' => $type,
+        ]);
+    }
 }

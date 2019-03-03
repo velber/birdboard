@@ -10,6 +10,19 @@ class Task extends Model
 
     protected $touches = ['project'];
 
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($task) {
+            $task->project->createActivity('created_task');
+        });
+    }
+
     public function project()
     {
         return $this->belongsTo(Project::class);
@@ -18,5 +31,12 @@ class Task extends Model
     public function path()
     {
         return sprintf("/tasks/%d", $this->id);
+    }
+
+    public function complete()
+    {
+        $this->update(['completed' => true]);
+
+        $this->project->createActivity('completed_task');
     }
 }
