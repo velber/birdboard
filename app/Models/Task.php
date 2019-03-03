@@ -21,6 +21,10 @@ class Task extends Model
         static::created(function ($task) {
             $task->project->createActivity('created_task');
         });
+
+        static::deleted(function ($task) {
+            $task->project->createActivity('deleted_task');
+        });
     }
 
     public function project()
@@ -43,5 +47,7 @@ class Task extends Model
     public function incomplete()
     {
         $this->update(['completed' => false]);
+
+        $this->project->createActivity('incompleted_task');
     }
 }
