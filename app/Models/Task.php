@@ -19,11 +19,11 @@ class Task extends Model
         parent::boot();
 
         static::created(function ($task) {
-            $task->project->createActivity('created_task');
+            $task->createActivity('created_task');
         });
 
         static::deleted(function ($task) {
-            $task->project->createActivity('deleted_task');
+            $task->createActivity('deleted_task');
         });
     }
 
@@ -41,13 +41,30 @@ class Task extends Model
     {
         $this->update(['completed' => true]);
 
-        $this->project->createActivity('completed_task');
+        $this->createActivity('completed_task');
     }
 
     public function incomplete()
     {
         $this->update(['completed' => false]);
 
-        $this->project->createActivity('incompleted_task');
+        $this->createActivity('incompleted_task');
+    }
+
+
+    public function activity()
+    {
+        return $this->morphMany(Activity::class, 'subject')->latest();
+    }
+
+    /**
+     * @param string $description
+     */
+    public function createActivity(string $description): void
+    {
+        $this->activity()->create([
+            'description' => $description,
+            'project_id' => $this->project_id,
+        ]);
     }
 }
