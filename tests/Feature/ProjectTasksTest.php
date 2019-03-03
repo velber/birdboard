@@ -75,7 +75,21 @@ class ProjectTasksTest extends TestCase
     {
         $project = ProjectFactory::withTasks(1)->create();
 
-//        $task = $project->addTask('test t');
+        $this->actingAs($project->owner)
+            ->patch($project->tasks->first()->path(), [
+            'body' => 'new body',
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'new body',
+        ]);
+    }
+
+    /** @test */
+    public function a_task_can_be_completed()
+    {
+        $project = ProjectFactory::withTasks(1)->create();
+
         $this->actingAs($project->owner)
             ->patch($project->tasks->first()->path(), [
             'body' => 'new body',
@@ -85,6 +99,26 @@ class ProjectTasksTest extends TestCase
         $this->assertDatabaseHas('tasks', [
             'body' => 'new body',
             'completed' => true,
+        ]);
+    }
+
+    /** @test */
+    public function a_task_can_be_in_completed()
+    {
+        $project = ProjectFactory::withTasks(1)->create([
+            'body' => 'new body',
+            'completed' => true,
+        ]);
+
+        $this->actingAs($project->owner)
+            ->patch($project->tasks->first()->path(), [
+                'completed' => false,
+                'body' => 'new body',
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'new body',
+            'completed' => false,
         ]);
     }
 }

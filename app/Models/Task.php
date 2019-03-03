@@ -39,4 +39,9 @@ class Task extends Model
 
         $this->project->createActivity('completed_task');
     }
+
+    public function incomplete()
+    {
+        $this->update(['completed' => false]);
+    }
 }

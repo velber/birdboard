@@ -41,4 +41,12 @@ class TaskTest extends TestCase
         $task->complete();
         $this->assertTrue($task->fresh()->completed);
     }
+
+    /** @test */
+    public function it_can_be_in_completed()
+    {
+        $task = factory(Task::class)->create(['completed' => true]);
+        $task->incomplete();
+        $this->assertFalse($task->fresh()->completed);
+    }
 }
