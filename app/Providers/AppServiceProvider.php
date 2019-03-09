@@ -26,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Project::observe(ProjectObserver::class);
+        // moved to RecordActivity trait
+//        Project::observe(ProjectObserver::class);
     }
 }

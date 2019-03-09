@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    use RecordActivity;
+
     protected $guarded = ['id'];
 
     protected $touches = ['project'];
@@ -14,17 +16,19 @@ class Task extends Model
         'completed' => 'boolean',
     ];
 
+    protected static $recordableEvents = ['created', 'deleted'];
+
     protected static function boot()
     {
         parent::boot();
-
-        static::created(function ($task) {
-            $task->createActivity('created_task');
-        });
-
-        static::deleted(function ($task) {
-            $task->createActivity('deleted_task');
-        });
+        // moved to RecordActivity trait
+//        static::created(function ($task) {
+//            $task->recordActivity('created_task');
+//        });
+//
+//        static::deleted(function ($task) {
+//            $task->recordActivity('deleted_task');
+//        });
     }
 
     public function project()
@@ -41,30 +45,19 @@ class Task extends Model
     {
         $this->update(['completed' => true]);
 
-        $this->createActivity('completed_task');
+        $this->recordActivity('completed_task');
     }
 
     public function incomplete()
     {
         $this->update(['completed' => false]);
 
-        $this->createActivity('incompleted_task');
+        $this->recordActivity('incompleted_task');
     }
 
 
     public function activity()
     {
         return $this->morphMany(Activity::class, 'subject')->latest();
-    }
-
-    /**
-     * @param string $description
-     */
-    public function createActivity(string $description): void
-    {
-        $this->activity()->create([
-            'description' => $description,
-            'project_id' => $this->project_id,
-        ]);
     }
 }
