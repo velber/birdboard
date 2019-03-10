@@ -50,6 +50,15 @@ class ManageProjectTest extends TestCase
     }
 
     /** @test */
+    function a_user_can_see_projects_that_was_invited()
+    {
+        $user = $this->signIn();
+        $project = tap(ProjectFactory::create())->invite($user);
+
+        $this->get(route('projects.index'))->assertSee($project->title);
+    }
+
+    /** @test */
     function a_user_can_delete_a_project()
     {
         $project = ProjectFactory::create();
