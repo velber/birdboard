@@ -18,9 +18,7 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
 
     // projects
-    Route::resource('projects', 'ProjectsController', [
-            'only' => ['index', 'store', 'show', 'create', 'update', 'edit'],
-        ]);
+    Route::resource('projects', 'ProjectsController');
 
     // project tasks
     Route::post('projects/{project}/tasks', 'ProjectTasksController@store');

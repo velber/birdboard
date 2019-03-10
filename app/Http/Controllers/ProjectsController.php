@@ -77,4 +77,12 @@ class ProjectsController extends Controller
         return redirect($request->save()->path());
     }
 
+    public function destroy(Project $project)
+    {
+        $this->authorize('delete', $project);
+
+        $project->delete();
+
+        return redirect()->route('projects.index');
+    }
 }
