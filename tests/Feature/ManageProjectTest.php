@@ -33,18 +33,11 @@ class ManageProjectTest extends TestCase
      */
     public function a_user_can_create_a_project()
     {
-        $owner = factory(User::class)->create();
-        $this->signIn($owner);
+        $this->signIn();
         $this->get('/projects/create')->assertStatus(200);
 
-        $project = factory(Project::class)->raw(['owner_id'=> $owner->id]);
-
-        $response = $this->post('/projects', $project);
-
-        $projectModel = Project::where($project)->first();
-        $response->assertRedirect($projectModel->path());
-
-        $this->get($projectModel->path())
+        $this->followingRedirects()
+            ->post('/projects', $project = factory(Project::class)->raw())
             ->assertSee($project['notes'])
             ->assertSee($project['title']);
     }
@@ -79,12 +72,17 @@ class ManageProjectTest extends TestCase
         $this->delete($project->path())
             ->assertRedirect('/login');
 
-        $this->signIn();
+        $user = $this->signIn();
 
         $this->delete($project->path())
             ->assertStatus(403);
 
         $this->assertDatabaseHas('projects', $project->only('id'));
+
+        $project->invite($user);
+        $this->actingAs($user)
+            ->delete($project->path())
+            ->assertStatus(403);
     }
 
     /**

@@ -4,11 +4,13 @@
     </h1>
     <div class="text-grey mb-4 flex-1">{{ str_limit($project->description) }}</div>
 
-    <footer>
-        <form action="{{ route('projects.destroy', ['project' => $project->id ]) }}" class="text-right" method="post">
-            @csrf()
-            @method('DELETE')
-            <button type="submit" class="text-xs">Delete</button>
-        </form>
-    </footer>
+    @can('manage', $project)
+        <footer>
+            <form action="{{ route('projects.destroy', ['project' => $project->id ]) }}" class="text-right" method="post">
+                @csrf()
+                @method('DELETE')
+                <button type="submit" class="text-xs">Delete</button>
+            </form>
+        </footer>
+    @endcan
 </div>
