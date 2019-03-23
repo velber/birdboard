@@ -36,7 +36,7 @@ class InvitationTest extends TestCase
         ])
             ->assertSessionHasErrors([
             'email' => 'Error',
-        ]);
+        ], null, 'invitations');
     }
 
     /** @test */
@@ -45,9 +45,16 @@ class InvitationTest extends TestCase
         $project = ProjectFactory::create();
         $user = factory(User::class)->create();
 
-        $this->actingAs($user)
-            ->post($project->path() . '/invitations')
-            ->assertStatus(403);
+        $assertInvitationForbiden = function () use ($project, $user) {
+            $this->actingAs($user)
+                ->post($project->path() . '/invitations')
+                ->assertStatus(403);
+        };
+
+        $assertInvitationForbiden();
+
+        $project->invite($user);
+        $assertInvitationForbiden();
     }
 
     /** @test */

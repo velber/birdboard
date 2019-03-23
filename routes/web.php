@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('tasks/{task}', 'ProjectTasksController@update');
 
     // project invitations
-    Route::post('projects/{project}/invitations', 'ProjectInvitationsController@store');
+    Route::post('projects/{project}/invitations', 'ProjectInvitationsController@store')->name('projects.invitations');
 });
 
 
