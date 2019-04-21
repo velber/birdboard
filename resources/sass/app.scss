@@ -2,6 +2,12 @@
 // Variables
 @import 'variables';
 
+@import 'themes/dark';
+@import 'themes/light';
+
+@import 'components/button';
+@import 'components/card';
+
 /**
  * This injects Tailwind's base styles, which is a combination of
  * Normalize.css and some additional base styles.
@@ -44,15 +50,6 @@
   @apply .px-4;
 }
 
-.button {
-  @apply .bg-button .text-white .no-underline .rounded-lg .text-sm .py-2 .px-5;
-  box-shadow: 0 2px 7px 0 #b0eaff;
-}
-
-.card {
-  @apply .bg-card .p-5 .rounded .shadow;
-  color: var(--text-default-color);
-}
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.
@@ -78,20 +75,4 @@
  * @import "utilities/skew-transforms";
  */
 
-.theme-light {
-    --page-background-color: #F5F6F9;
-    --card-background-color: white;
-    --button-background-color: #47cdff;
-    --header-background-color: white;
 
-    --text-default-color: #222;
-}
-
-.theme-dark {
-    --page-background-color: #17181E;
-    --card-background-color: #1F2027;
-    --button-background-color: #59B6F9;
-    --header-background-color: #1F2027;
-
-    --text-default-color: #fff;
-}

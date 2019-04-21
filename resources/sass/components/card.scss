@@ -1,0 +1,5 @@
+
+.card {
+  @apply .bg-card .p-5 .rounded .shadow;
+  color: var(--text-default-color);
+}
