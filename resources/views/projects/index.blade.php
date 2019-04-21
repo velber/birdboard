@@ -3,7 +3,7 @@
 @section('content')
     <header class="flex items-end mb-3 py-4">
         <div class="flex justify-between items-center w-full">
-            <h2 class="mb-3 mr-auto text-nowrap text-grey text-sm">My Projects</h2>
+            <h2 class="mb-3 mr-auto text-nowrap text-default text-sm">My Projects</h2>
             <a href="{{ route('projects.create') }}" class="button">Create a new project</a>
         </div>
     </header>
