@@ -46,6 +46,7 @@ let defaultConfig = require('tailwindcss/defaultConfig')()
 let colors = {
   'transparent': 'transparent',
   'default': 'var(--text-default-color)',
+  'error': 'var(--text-error-color)',
 
   'black': '#22292f',
   'grey-darkest': '#3d4852',

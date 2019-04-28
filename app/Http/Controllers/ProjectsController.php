@@ -59,6 +59,12 @@ class ProjectsController extends Controller
 
         $project = $request->user()->projects()->create($attributes);
 
+        if ($request->wantsJson()) {
+            return [
+                'message' => $project->path(),
+            ];
+        }
+
         return redirect()->route('projects.show', ['project' => $project->id]);
     }
 
