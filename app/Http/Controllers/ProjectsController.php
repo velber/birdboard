@@ -59,6 +59,10 @@ class ProjectsController extends Controller
 
         $project = $request->user()->projects()->create($attributes);
 
+        if ($tasks = $request->has('tasks')) {
+            $project->addTasks($tasks);
+        }
+
         if ($request->wantsJson()) {
             return [
                 'message' => $project->path(),

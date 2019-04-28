@@ -30,6 +30,11 @@ class Project extends Model
         return $this->tasks()->create(['body' => $body]);
     }
 
+    public function addTasks(array $tasks)
+    {
+        return $this->tasks()->createMany($tasks);
+    }
+
     public function invite(User $user)
     {
         $this->members()->attach($user);

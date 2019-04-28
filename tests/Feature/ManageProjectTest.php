@@ -43,6 +43,21 @@ class ManageProjectTest extends TestCase
     }
 
     /** @test */
+    public function task_can_be_included_as_part_of_roject()
+    {
+        $this->signIn();
+        $attributes = factory(Project::class)->raw();
+        $attributes['tasks'] = [
+            ['body' => 'Task 1'],
+            ['body' => 'Task 2'],
+        ];
+
+        $this->post('/projects', $attributes);
+
+        $this->assertCount(2, Project::first()->tasks);
+    }
+
+    /** @test */
     function a_user_can_see_projects_that_was_invited()
     {
         $user = $this->signIn();
