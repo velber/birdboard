@@ -59,7 +59,7 @@ class ProjectsController extends Controller
 
         $project = $request->user()->projects()->create($attributes);
 
-        if ($tasks = $request->has('tasks')) {
+        if ($tasks = $request->get('tasks')) {
             $project->addTasks($tasks);
         }
 
