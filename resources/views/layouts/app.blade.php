@@ -44,24 +44,22 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 @endif
                             @else
-
                                 <theme-switcher></theme-switcher>
-
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                <dropdown align="" width="200px">
+                                    <template slot="trigger">
+                                        <button type="button" id="navbarDropdown" class="nav-link dropdown-toggle">
+                                            {{ Auth::user()->name }} <span class="caret"></span>
+                                        </button>
+                                    </template>
+                                    <a class="dropdown-menu-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-                                </div>
+                                </dropdown>
                             @endguest
                         </div>
                     </div>

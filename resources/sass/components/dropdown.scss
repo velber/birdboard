@@ -1,0 +1,12 @@
+.dropdown-toggle {
+    > button:focus {
+        outline: 0;
+    }
+}
+.dropdown-menu-link {
+    @apply block leading-loose text-default no-underline text-sm px-4;
+    &:hover {
+        @apply .underline;
+        background: rgba(0,0,0,0.1);
+    }
+}
